@@ -1,0 +1,12 @@
+-r requirements-core.txt
+torch>=2.2,<3
+torchvision>=0.17,<1
+transformers>=4.45,<6
+sentence-transformers>=3.0,<6
+faiss-cpu>=1.8,<2
+open-clip-torch>=2.24,<3
+huggingface_hub>=0.25,<2
+pystac-client>=0.8,<1
+requests>=2.31,<3
+# Optional learned change model runtime
+onnxruntime>=1.18,<2
