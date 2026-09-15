@@ -1,0 +1,42 @@
+﻿
+from pydantic import BaseModel,Field
+from typing import Optional
+
+class TextSearchRequest(BaseModel):
+    query:str=Field(min_length=2,max_length=500)
+    top_k:int=Field(default=10,ge=1,le=100)
+    sensor:Optional[str]=None
+    start_date:Optional[str]=None
+    end_date:Optional[str]=None
+    min_quality:float=Field(default=0.0,ge=0,le=1)
+    aoi_bbox:list[float]|None=Field(default=None,min_length=4,max_length=4)
+
+class FeedbackRequest(BaseModel):
+    tile_id:Optional[str]=None
+    decision:str=Field(pattern="^(confirm|reject|uncertain)$")
+    note:str=""
+
+class ChangeRequest(BaseModel):
+    before_path:str
+    after_path:str
+
+class Observation(BaseModel):
+    date:str
+    path:str
+
+class TimelineRequest(BaseModel):
+    observations:list[Observation]
+    min_confidence:float=Field(default=.60,ge=0,le=1)
+
+class AOIRequest(BaseModel):
+    bbox:list[float]=Field(min_length=4,max_length=4)
+    top_k:int=Field(default=20,ge=1,le=100)
+
+class TimelinePairRequest(BaseModel):
+    observations:list[Observation]
+    max_gap_days:int|None=Field(default=None,ge=1)
+
+class ClusterRequest(BaseModel):
+    n_clusters:int=Field(default=8,ge=2,le=50)
+    top_k:int=Field(default=50,ge=2,le=500)
+
